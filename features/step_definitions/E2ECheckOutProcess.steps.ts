@@ -6,7 +6,6 @@ declare module "@cucumber/cucumber" {
     poManager: POManager;
   }
 }
-const url = "https://automationexercise.com/";
 
 Given(
   "I create a User {string} with password {string} via API",
@@ -49,7 +48,7 @@ When("I enter card details", async function () {
 });
 
 Given("I navigate to the {string} page", async function (pageURL: string) {
-  await this.page.goto(url + pageURL);
+  await this.poManager.getBasePage().gotoURL(pageURL);
 });
 
 When(

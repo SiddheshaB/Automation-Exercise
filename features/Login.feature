@@ -1,8 +1,13 @@
 Feature: New user registration and login
 
   Scenario: User regristration
-    Given User signup with personal information
+    Given I signup with personal information
     And I logout from the account
+
+  Scenario: Register User with existing email
+    Given I navigate to the "/login" page
+    When I register with existing email
+    Then I should see the "Email Address already exist"
 
   Scenario Outline: Login with invalid credentials
     When I login with credentials "<emailAddress>" and "<password>"

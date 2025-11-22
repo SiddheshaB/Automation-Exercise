@@ -2,12 +2,16 @@ import { expect, Locator, Page } from "@playwright/test";
 export class BasePage {
   page: Page;
   acceptCookies: Locator;
+
   constructor(page: Page) {
     this.page = page;
     this.acceptCookies = this.page.locator('button:has-text("Consent")');
   }
-  async gotoURL() {
-    await this.page.goto("https://automationexercise.com/login");
+  async gotoURL(pageURL: string) {
+    const baseURL = "https://automationexercise.com";
+    await this.page.goto(baseURL + pageURL);
+    await this.consentCookies();
+    //await this.page.goto("https://automationexercise.com/login");
   }
   async consentCookies() {
     if (await this.acceptCookies.isVisible()) {

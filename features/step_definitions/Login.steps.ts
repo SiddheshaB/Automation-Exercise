@@ -6,21 +6,19 @@ import { expect } from "@playwright/test";
 declare module "@cucumber/cucumber" {
   interface World {
     poManager: POManager;
-    basePage: BasePage;
   }
 }
 
-Given("User signup with personal information", async function () {
-  this.basePage = this.poManager.getBasePage();
-  await this.basePage.gotoURL();
-  await this.basePage.consentCookies();
+Given("I signup with personal information", async function () {
+  await this.poManager.getBasePage().gotoURL("/login");
+  //await this.poManager.getBasePage().consentCookies();
   await this.poManager.getSignUpPage().userSignUpWithPersonalInformation();
 });
 When(
   "I login with credentials {string} and {string}",
   async function (emailAddress, password) {
-    await this.poManager.getBasePage().gotoURL();
-    await this.poManager.getBasePage().consentCookies();
+    await this.poManager.getBasePage().gotoURL("/login");
+    //await this.poManager.getBasePage().consentCookies();
     await this.poManager
       .getLoginPage()
       .iLoginWithCredentials(emailAddress, password);
@@ -36,4 +34,8 @@ Then("I delete the account", async function () {
 
 Given("I logout from the account", async function () {
   await this.poManager.getBasePage().logout();
+});
+
+When("I register with existing email", async function () {
+  await this.poManager.getLoginPage().iRegisterwithExistingEmail();
 });
