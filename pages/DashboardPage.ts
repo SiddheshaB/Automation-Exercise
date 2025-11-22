@@ -1,5 +1,4 @@
 import { Locator, Page } from "@playwright/test";
-
 export class DashboardPage {
   page: Page;
   addToCartButton: Locator;

@@ -9,7 +9,7 @@ declare module "@cucumber/cucumber" {
 const url = "https://automationexercise.com/";
 
 Given(
-  "I create a User {string} with password {string}",
+  "I create a User {string} with password {string} via API",
   async function (email: string, password: string) {
     this.commonApi = new CommonApi();
     await this.commonApi.createUserViaApi(email, password);
@@ -20,22 +20,41 @@ Then("I search for item {string}", async function (productName: string) {
   await this.poManager.getProductsPage().searchForProduct(productName);
 });
 
-When("I add first item to the cart", async function () {
-  await this.page.goto(url + "/products");
-  await this.poManager.getProductsPage().addProductToCart();
-  await this.poManager.getViewCartPage().verifyProductInCart();
+When("I add an item to the cart", async function () {
+  await this.poManager.getProductsPage().iAddProductToCart();
 });
 
 When("I proceed to checkout", async function () {
-  await this.poManager.getViewCartPage().proceedToCheckout();
-  await this.poManager.getCheckoutPage().verifyOrderReviewSection();
-  await this.poManager.getPaymentPage().enterCardDetails();
+  await this.poManager.getViewCartPage().iProceedToCheckout();
 });
 
 Then("I download the invoice", async function () {
-  await this.poManager.getPaymentDonePage().downloadInvoice();
+  await this.poManager.getPaymentDonePage().iDownloadInvoice();
 });
 
 Then("I should see the order confirmation page", async function () {
-  await this.poManager.getPaymentDonePage().verifyOrderConfirmation();
+  await this.poManager.getPaymentDonePage().iVerifyOrderConfirmation();
 });
+
+Then(
+  "I should see be asked to login or register before checkout",
+  async function () {
+    await this.poManager.getViewCartPage().iSeeRegisterOption();
+  }
+);
+
+When("I enter card details", async function () {
+  await this.poManager.getCheckoutPage().iVerifyOrderReviewSection();
+  await this.poManager.getPaymentPage().iEnterCardDetails();
+});
+
+Given("I navigate to the {string} page", async function (pageURL: string) {
+  await this.page.goto(url + pageURL);
+});
+
+When(
+  "I verify quantity in the cart is {string}",
+  async function (item: string) {
+    await this.poManager.getViewCartPage().iVerifyProductInCart(item);
+  }
+);

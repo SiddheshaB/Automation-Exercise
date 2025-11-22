@@ -10,7 +10,9 @@ export class BasePage {
     await this.page.goto("https://automationexercise.com/login");
   }
   async consentCookies() {
-    await this.acceptCookies.click({ timeout: 3000 });
+    if (await this.acceptCookies.isVisible()) {
+      await this.acceptCookies.click({ timeout: 3000 });
+    }
   }
   async logout() {
     await this.page.getByText(/\bLogout\b/).click({ timeout: 15000 });

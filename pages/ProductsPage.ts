@@ -9,6 +9,7 @@ export class ProductsPage {
   productsList: Locator;
   productPage: Locator;
   firstProduct: Locator;
+  acceptCookies: Locator;
   constructor(page: Page) {
     this.page = page;
     this.searchBox = this.page.getByPlaceholder("Search Product");
@@ -18,8 +19,12 @@ export class ProductsPage {
     this.productsList = this.page.locator(".productinfo");
     this.productPage = this.page.getByText("All Products");
     this.firstProduct = this.page.locator("img").nth(0);
+    this.acceptCookies = this.page.locator('button:has-text("Consent")');
   }
-  async addProductToCart() {
+  async iAddProductToCart() {
+    if (await this.acceptCookies.isVisible()) {
+      await this.acceptCookies.click({ timeout: 3000 });
+    }
     await this.productPage.isVisible();
     await this.firstProduct.hover();
     await this.addToCartButton.nth(0).click();

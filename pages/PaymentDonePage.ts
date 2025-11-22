@@ -5,11 +5,11 @@ export class PaymentDonePage {
   constructor(page: Page) {
     this.page = page;
   }
-  async verifyOrderConfirmation() {
+  async iVerifyOrderConfirmation() {
     expect(await this.page.getByText("Order Placed!").isVisible()).toBeTruthy();
   }
 
-  async downloadInvoice() {
+  async iDownloadInvoice() {
     await this.page.getByText("Download Invoice").click();
   }
 }
