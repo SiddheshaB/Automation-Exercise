@@ -6,6 +6,9 @@ export class ProductDetailsPage {
   productInformation: Locator;
   availability: Locator;
   condition: Locator;
+  name: Locator;
+  email: Locator;
+  reviewText: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +20,9 @@ export class ProductDetailsPage {
       exact: true,
     });
     this.condition = this.page.getByText("Condition: New", { exact: true });
+    this.name = this.page.getByPlaceholder("Your Name");
+    this.email = this.page.locator("#email");
+    this.reviewText = this.page.getByPlaceholder("Add Review Here!");
   }
 
   async iViewProductDetails(firstProduct: any) {
@@ -29,5 +35,16 @@ export class ProductDetailsPage {
     expect(info).toContain(firstProduct.category.usertype.usertype);
     expect(await this.availability).toBeVisible();
     expect(await this.condition).toBeVisible();
+  }
+
+  async iAddAReview(name: string, email: string, review: string) {
+    await this.name.fill(name);
+    await this.email.fill(email);
+    await this.reviewText.fill(review);
+    await this.page.locator("#button-review").click();
+    expect(
+      await this.page.getByText("Thank you for your review.", { exact: true })
+        .isVisible
+    ).toBeTruthy();
   }
 }

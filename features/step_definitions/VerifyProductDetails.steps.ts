@@ -9,6 +9,11 @@ When("I view the details of the first product", async function () {
     .iViewProductDetails(firstProduct);
 });
 
-Then("I should see the product details", async function () {
-  // Write code here that turns the phrase above into concrete actions
-});
+When(
+  "I add a review with {string}, {string} and {string}",
+  async function (name: string, email: string, review: string) {
+    await this.poManager
+      .getProductDetailsPage()
+      .iAddAReview(name, email, review);
+  }
+);
