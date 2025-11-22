@@ -7,11 +7,11 @@ Feature: New user registration and login
   Scenario: Register User with existing email
     Given I navigate to the "/login" page
     When I register with existing email
-    Then I should see the "Email Address already exist"
+    Then I should see the result "Email Address already exist"
 
   Scenario Outline: Login with invalid credentials
     When I login with credentials "<emailAddress>" and "<password>"
-    Then I should see the "<result>"
+    Then I should see the result "<result>"
 
     Examples:
       | emailAddress             | password      | result                               |
@@ -20,7 +20,7 @@ Feature: New user registration and login
 
   Scenario Outline: Login with valid credentials
     When I login with credentials "<emailAddress>" and "<password>"
-    Then I should see the "<result>"
+    Then I should see the result "<result>"
     And I delete the account
 
     Examples:

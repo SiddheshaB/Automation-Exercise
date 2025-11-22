@@ -5,6 +5,7 @@ export class ViewCartPage {
   page: Page;
   checkoutButton: Locator;
   registerLink: Locator;
+  productName: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -12,10 +13,10 @@ export class ViewCartPage {
     this.registerLink = this.page.getByText("Register / Login", {
       exact: true,
     });
+    this.productName = this.page.locator(".cart_description h4 a");
   }
-  async iVerifyProductInCart(item: string) {
-    const quantity = await this.page.locator(".cart_quantity").innerText();
-    expect(quantity).toEqual(item);
+  async getProductName(index: number) {
+    return await this.productName.nth(index).allTextContents();
   }
   async iProceedToCheckout() {
     await this.checkoutButton.click();

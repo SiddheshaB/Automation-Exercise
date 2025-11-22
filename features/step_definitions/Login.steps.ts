@@ -11,21 +11,19 @@ declare module "@cucumber/cucumber" {
 
 Given("I signup with personal information", async function () {
   await this.poManager.getBasePage().gotoURL("/login");
-  //await this.poManager.getBasePage().consentCookies();
   await this.poManager.getSignUpPage().userSignUpWithPersonalInformation();
 });
 When(
   "I login with credentials {string} and {string}",
   async function (emailAddress, password) {
     await this.poManager.getBasePage().gotoURL("/login");
-    //await this.poManager.getBasePage().consentCookies();
     await this.poManager
       .getLoginPage()
       .iLoginWithCredentials(emailAddress, password);
   }
 );
 
-Then("I should see the {string}", async function (result) {
+Then("I should see the result {string}", async function (result) {
   await expect(this.page.getByText(result)).toBeVisible();
 });
 Then("I delete the account", async function () {

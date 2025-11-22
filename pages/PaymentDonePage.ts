@@ -10,6 +10,12 @@ export class PaymentDonePage {
   }
 
   async iDownloadInvoice() {
+    const downloadPromise = this.page.waitForEvent("download");
     await this.page.getByText("Download Invoice").click();
+    const download = await downloadPromise;
+    await download.saveAs(
+      "C:/PlaywrightWithCucumberAutomation/ECommerceAutomationProject/downloads/" +
+        download.suggestedFilename()
+    );
   }
 }

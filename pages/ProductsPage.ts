@@ -8,8 +8,9 @@ export class ProductsPage {
   viewCartButton: Locator;
   productsList: Locator;
   productPage: Locator;
-  firstProduct: Locator;
+  // firstProduct: Locator;
   acceptCookies: Locator;
+  productName: Locator;
   constructor(page: Page) {
     this.page = page;
     this.searchBox = this.page.getByPlaceholder("Search Product");
@@ -18,16 +19,20 @@ export class ProductsPage {
     this.viewCartButton = this.page.getByText("View Cart");
     this.productsList = this.page.locator(".productinfo");
     this.productPage = this.page.getByText("All Products");
-    this.firstProduct = this.page.locator("img").nth(0);
     this.acceptCookies = this.page.locator('button:has-text("Consent")');
+    this.productName = this.page.locator(".productinfo p");
   }
-  async iAddProductToCart() {
+  async iGetProductNameAt(index: number) {
+    return await this.productName.nth(index).allTextContents();
+  }
+
+  async iAddProductToCart(index: number) {
     if (await this.acceptCookies.isVisible()) {
       await this.acceptCookies.click({ timeout: 3000 });
     }
     await this.productPage.isVisible();
-    await this.firstProduct.hover();
-    await this.addToCartButton.nth(0).click();
+    await this.productName.nth(index).hover();
+    await this.addToCartButton.nth(index).click();
     await this.page.getByText("Added!").first().waitFor();
     await this.viewCartButton.click();
   }

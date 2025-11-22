@@ -56,5 +56,17 @@ export class CommonApi {
       }
     );
   }
+
+  async getAllProductsListViaApi() {
+    this.response = await fetch(
+      "https://automationexercise.com/api/productsList",
+      {
+        method: "GET",
+      }
+    );
+
+    const body = await this.response.json();
+    return body.products[0];
+  }
 }
 module.exports = { CommonApi };

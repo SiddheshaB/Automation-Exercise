@@ -4,19 +4,30 @@ export class CheckoutPage {
   page: Page;
   reviewOrder: Locator;
   comment: Locator;
-  address: Locator;
+  deliveryAddress: Locator;
+  billingAddress: Locator;
+
   constructor(page: Page) {
     this.page = page;
     this.reviewOrder = this.page.getByRole("heading", {
       name: "Review Your Order",
     });
     this.comment = this.page.locator("textarea[name='message']");
-    this.address = this.page.locator("#address_delivery");
+    this.deliveryAddress = this.page.locator("#address_delivery");
+    this.billingAddress = this.page.locator("#address_invoice");
   }
   async iVerifyOrderReviewSection() {
     await this.reviewOrder.isVisible();
-    console.log("Delivery Address: " + (await this.address.innerText()));
-    await this.address
+    console.log(
+      "Delivery Address: " + (await this.deliveryAddress.innerText())
+    );
+    await this.deliveryAddress
+      .filter({
+        hasText:
+          "24 Tib Street Near Printworks Manchester England M44AB   United Kingdom 7903030204",
+      })
+      .isVisible();
+    await this.billingAddress
       .filter({
         hasText:
           "24 Tib Street Near Printworks Manchester England M44AB   United Kingdom 7903030204",

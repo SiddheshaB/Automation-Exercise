@@ -1,11 +1,13 @@
 import { When, Then, Given } from "@cucumber/cucumber";
 import { POManager } from "../../pages/POManager";
 import { CommonApi } from "./CommonApi.steps";
+import { expect } from "@playwright/test";
 declare module "@cucumber/cucumber" {
   interface World {
     poManager: POManager;
   }
 }
+let selectedProductName: any;
 
 Given(
   "I create a User {string} with password {string} via API",
@@ -20,7 +22,10 @@ Then("I search for item {string}", async function (productName: string) {
 });
 
 When("I add an item to the cart", async function () {
-  await this.poManager.getProductsPage().iAddProductToCart();
+  selectedProductName = await this.poManager
+    .getProductsPage()
+    .iGetProductNameAt(0);
+  await this.poManager.getProductsPage().iAddProductToCart(0);
 });
 
 When("I proceed to checkout", async function () {
@@ -57,3 +62,10 @@ When(
     await this.poManager.getViewCartPage().iVerifyProductInCart(item);
   }
 );
+
+Then("I verify same item is present in the cart", async function () {
+  const cartProductName = await this.poManager
+    .getViewCartPage()
+    .getProductName(0);
+  expect(cartProductName).toEqual(selectedProductName);
+});

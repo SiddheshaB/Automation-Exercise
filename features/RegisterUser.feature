@@ -1,1 +1,0 @@
-Feature: Verify User registration
