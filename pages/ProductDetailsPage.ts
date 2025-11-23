@@ -12,9 +12,7 @@ export class ProductDetailsPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.viewCart = this.page
-      .getByRole("link", { name: "View Product" })
-      .nth(0);
+    this.viewCart = this.page.getByRole("link", { name: "View Product" });
     this.productInformation = this.page.locator(".product-information");
     this.availability = this.page.getByText("Availability: In Stock", {
       exact: true,
@@ -25,8 +23,9 @@ export class ProductDetailsPage {
     this.reviewText = this.page.getByPlaceholder("Add Review Here!");
   }
 
-  async iViewProductDetails(firstProduct: any) {
-    await this.viewCart.click();
+  async iViewProductDetails(firstProduct: any, item: string) {
+    const index = Number(item);
+    await this.viewCart.nth(index).click();
     const info = await this.productInformation.innerText();
     expect(info).toContain(firstProduct.name);
     expect(info).toContain(firstProduct.brand);

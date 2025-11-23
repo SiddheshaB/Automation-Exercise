@@ -1,32 +1,19 @@
 import { When, Then, Given } from "@cucumber/cucumber";
 import { POManager } from "../../pages/POManager";
 import { CommonApi } from "./CommonApi.steps";
-import { expect } from "@playwright/test";
 declare module "@cucumber/cucumber" {
   interface World {
     poManager: POManager;
   }
 }
-let selectedProductName: any;
 
 Given(
   "I create a User {string} with password {string} via API",
   async function (email: string, password: string) {
-    this.commonApi = new CommonApi();
-    await this.commonApi.createUserViaApi(email, password);
+    const commonApi = new CommonApi();
+    await commonApi.createUserViaApi(email, password);
   }
 );
-
-Then("I search for item {string}", async function (productName: string) {
-  await this.poManager.getProductsPage().searchForProduct(productName);
-});
-
-When("I add an item to the cart", async function () {
-  selectedProductName = await this.poManager
-    .getProductsPage()
-    .iGetProductNameAt(0);
-  await this.poManager.getProductsPage().iAddProductToCart(0);
-});
 
 When("I proceed to checkout", async function () {
   await this.poManager.getViewCartPage().iProceedToCheckout();
@@ -52,20 +39,9 @@ When("I enter card details", async function () {
   await this.poManager.getPaymentPage().iEnterCardDetails();
 });
 
-Given("I navigate to the {string} page", async function (pageURL: string) {
-  await this.poManager.getBasePage().gotoURL(pageURL);
-});
-
 When(
   "I verify quantity in the cart is {string}",
   async function (item: string) {
     await this.poManager.getViewCartPage().iVerifyProductInCart(item);
   }
 );
-
-Then("I verify same item is present in the cart", async function () {
-  const cartProductName = await this.poManager
-    .getViewCartPage()
-    .getProductName(0);
-  expect(cartProductName).toEqual(selectedProductName);
-});

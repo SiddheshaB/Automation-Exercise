@@ -19,6 +19,19 @@ Before(async function () {
   // Make Playwright page actions more tolerant (30s)
   this.page.setDefaultTimeout(30 * 1000);
   this.poManager = new POManager(this.page);
+
+  await this.page.route("**/*", (route: any) => {
+    const url = route.request().url();
+    if (
+      url.includes("ads") ||
+      url.includes("doubleclick") ||
+      url.includes("googleads")
+    ) {
+      route.abort();
+    } else {
+      route.continue();
+    }
+  });
 });
 
 // Clean up after tests

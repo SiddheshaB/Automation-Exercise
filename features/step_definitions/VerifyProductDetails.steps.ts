@@ -1,13 +1,16 @@
 import { Then, When } from "@cucumber/cucumber";
 import { CommonApi } from "./CommonApi.steps";
 
-When("I view the details of the first product", async function () {
-  this.commonApi = new CommonApi();
-  const firstProduct = await this.commonApi.getAllProductsListViaApi();
-  await this.poManager
-    .getProductDetailsPage()
-    .iViewProductDetails(firstProduct);
-});
+When(
+  "I view the details of the {string} product",
+  async function (index: string) {
+    const commonApi = new CommonApi();
+    const products = await commonApi.getAllProductsListViaApi();
+    await this.poManager
+      .getProductDetailsPage()
+      .iViewProductDetails(products[index], index);
+  }
+);
 
 When(
   "I add a review with {string}, {string} and {string}",
