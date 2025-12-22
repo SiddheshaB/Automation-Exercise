@@ -11,6 +11,10 @@ export class DashboardPage {
     this.subscribeEmail = this.page.locator("#susbscribe_email");
   }
 
+  async iValidateLoggedInUser(result: string) {
+    await expect(this.page.getByText(result)).toBeVisible();
+  }
+
   async addProductToCart() {
     await this.addToCartButton.first().click();
     await this.page.getByText("Added!").first().waitFor();

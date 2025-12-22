@@ -1,6 +1,6 @@
-import { Locator, Page } from "@playwright/test";
-export class LoginPage {
-  page: Page;
+import { Locator, Page, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
+export class LoginPage extends BasePage {
   loginEmail: Locator;
   password: Locator;
   loginButton: Locator;
@@ -8,15 +8,16 @@ export class LoginPage {
   signUpEmail: Locator;
   signUpButton: Locator;
   constructor(page: Page) {
-    this.page = page;
-    this.loginEmail = this.page.locator('[data-qa="login-email"]');
-    this.password = this.page.getByPlaceholder("Password");
-    this.loginButton = this.page.getByRole("button", { name: "Login" });
-    this.name = this.page.getByPlaceholder("Name");
-    this.signUpEmail = this.page.locator('[data-qa="signup-email"]');
-    this.signUpButton = this.page.getByRole("button", { name: "Signup" });
+    //this.page = page;
+    super(page);
+    this.loginEmail = page.locator('[data-qa="login-email"]');
+    this.password = page.getByPlaceholder("Password");
+    this.loginButton = page.getByRole("button", { name: "Login" });
+    this.name = page.getByPlaceholder("Name");
+    this.signUpEmail = page.locator('[data-qa="signup-email"]');
+    this.signUpButton = page.getByRole("button", { name: "Signup" });
   }
-  async iLoginWithCredentials(emailAddress: string, password: string) {
+  async login(emailAddress: string, password: string) {
     await this.loginEmail.fill(emailAddress);
     await this.password.fill(password);
     await this.loginButton.click();

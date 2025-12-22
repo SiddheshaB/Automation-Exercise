@@ -1,5 +1,20 @@
 {
     "email": "johndoetest4@testing.com",
-    "password": "password@2025"
+    "password": "password@2025",
+    "name": "John Doe",
+    "title": "Mr",
+          "birth_date": "27",
+          "birth_month": "05",
+          "birth_year": "2002",
+          "firstname": "John",
+          "lastname": "Doe",
+          "company": "ABC Testing",
+          "address1": "24 Tib Street",
+          "address2": "Near Printworks",
+          "country": "United Kingdom",
+          "zipcode": "M44AB",
+          "state": "England",
+          "city": "Manchester",
+          "mobile_number": "7903030204"
 
 }

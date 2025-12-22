@@ -15,7 +15,7 @@ export class BasePage {
   }
   async consentCookies() {
     if (await this.acceptCookies.isVisible()) {
-      await this.acceptCookies.click({ timeout: 3000 });
+      await this.acceptCookies.click({ timeout: 5000 });
     }
   }
   async logout() {
