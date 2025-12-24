@@ -5,7 +5,7 @@ import { BasePage } from "./BasePage";
 import { DashboardPage } from "./DashboardPage";
 import { ProductsPage } from "./ProductsPage";
 import { ViewCartPage } from "./ViewCartPage";
-import { CheckoutPage } from "./CheckOutPage";
+import { CheckoutPage } from "./CheckoutPage";
 import { PaymentPage } from "./PaymentPage";
 import { PaymentDonePage } from "./PaymentDonePage";
 import { ContactUsFormPage } from "./ContactUsFormPage";

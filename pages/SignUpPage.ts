@@ -46,9 +46,9 @@ export class SignUpPage {
     this.createAccountButton = this.page.locator('[data-qa="create-account"]');
     this.continueButton = this.page.locator('[data-qa="continue-button"]');
   }
-  async userSignUpWithPersonalInformation() {
+  async signUp() {
     await this.name.fill("John Doe");
-    await this.emailAddress.fill("johndoetest7@testing.com");
+    await this.emailAddress.fill("johndoeuser@testing.com");
     await this.signUpButton.click();
     // Wait for the personal information section to appear after clicking Signup.
     // If the page closes unexpectedly, surface a clearer error.
@@ -73,10 +73,5 @@ export class SignUpPage {
     await this.zipcode.fill("M44AB");
     await this.mobileNumber.fill("7903030204");
     await this.createAccountButton.click();
-    await expect(
-      this.page.getByRole("heading", { name: "Account Created!" })
-    ).toBeVisible();
-    await this.continueButton.click();
-    await expect(this.page.getByText("Logged in as John Doe")).toBeVisible();
   }
 }

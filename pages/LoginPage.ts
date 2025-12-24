@@ -7,6 +7,7 @@ export class LoginPage extends BasePage {
   name: Locator;
   signUpEmail: Locator;
   signUpButton: Locator;
+  baseUrl: string = "https://automationexercise.com";
   constructor(page: Page) {
     //this.page = page;
     super(page);
@@ -23,9 +24,9 @@ export class LoginPage extends BasePage {
     await this.loginButton.click();
   }
 
-  async iRegisterwithExistingEmail() {
+  async registerWithExistingEmail() {
     await this.name.fill("John Doe");
-    await this.signUpEmail.fill("johndoetest7@testing.com");
+    await this.signUpEmail.fill("johndoeuser@testing.com");
     await this.signUpButton.click();
   }
 }

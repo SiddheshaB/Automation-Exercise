@@ -2,10 +2,12 @@ import { expect, Locator, Page } from "@playwright/test";
 export class BasePage {
   page: Page;
   acceptCookies: Locator;
+  continueButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.acceptCookies = this.page.locator('button:has-text("Consent")');
+    this.continueButton = this.page.locator('[data-qa="continue-button"]');
   }
   async gotoURL(pageURL: string) {
     const baseURL = "https://automationexercise.com";
@@ -30,5 +32,9 @@ export class BasePage {
     ).toBeVisible();
     await this.page.locator('[data-qa="continue-button"]').click();
     await expect(this.page.getByText(" Signup / Login")).toBeVisible();
+  }
+
+  async clickContinue() {
+    await this.continueButton.click();
   }
 }
