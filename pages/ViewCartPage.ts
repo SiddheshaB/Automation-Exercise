@@ -24,7 +24,7 @@ export class ViewCartPage {
     );
     return await this.productName.nth(index).textContent();
   }
-  async iProceedToCheckout() {
+  async checkout() {
     await this.checkoutButton.click();
   }
 

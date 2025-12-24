@@ -19,18 +19,16 @@ export class ProductsPage {
     this.acceptCookies = this.page.locator('button:has-text("Consent")');
     this.productName = this.page.locator(".productinfo p");
   }
-  async iGetProductNameAt(index: number) {
-    return await this.productName.nth(index).allTextContents();
+  async firstProduct() {
+    return await this.productName.first().allTextContents();
   }
 
-  async iAddProductToCart(index: number) {
-    if (await this.acceptCookies.isVisible()) {
-      await this.acceptCookies.click({ timeout: 3000 });
-    }
+  async addProduct(index: number) {
     await this.productPage.isVisible();
     await this.productName.nth(index).hover();
     await this.addToCartButton.nth(index).click();
     await this.page.getByText("Added!").first().waitFor();
+    return await this.productName.first().allTextContents();
   }
 
   async iSearchForAProduct(productName: string) {
@@ -52,9 +50,5 @@ export class ProductsPage {
       .locator(".product-overlay a.add-to-cart")
       .click();
     await this.page.getByText("Added!").waitFor();
-  }
-
-  async iClickOnTheButton(button: string) {
-    await this.page.getByText(button).click();
   }
 }

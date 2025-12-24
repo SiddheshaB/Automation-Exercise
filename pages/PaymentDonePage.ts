@@ -9,7 +9,7 @@ export class PaymentDonePage {
     expect(await this.page.getByText("Order Placed!").isVisible()).toBeTruthy();
   }
 
-  async iDownloadInvoice() {
+  async downloadInvoice() {
     const downloadPromise = this.page.waitForEvent("download");
     await this.page.getByText("Download Invoice").click();
     const download = await downloadPromise;

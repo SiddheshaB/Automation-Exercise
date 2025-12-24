@@ -37,4 +37,10 @@ export class BasePage {
   async clickContinue() {
     await this.continueButton.click();
   }
+  async clickByText(button: string) {
+    await this.page.getByText(button).click();
+  }
+  async normalizeText(text: string) {
+    return text.replace(/\s+/g, " ").trim();
+  }
 }

@@ -16,24 +16,14 @@ export class CheckoutPage {
     this.deliveryAddress = this.page.locator("#address_delivery");
     this.billingAddress = this.page.locator("#address_invoice");
   }
-  async iVerifyOrderReviewSection() {
-    await this.reviewOrder.isVisible();
-    console.log(
-      "Delivery Address: " + (await this.deliveryAddress.innerText())
-    );
-    await this.deliveryAddress
-      .filter({
-        hasText:
-          "24 Tib Street Near Printworks Manchester England M44AB   United Kingdom 7903030204",
-      })
-      .isVisible();
-    await this.billingAddress
-      .filter({
-        hasText:
-          "24 Tib Street Near Printworks Manchester England M44AB   United Kingdom 7903030204",
-      })
-      .isVisible();
-    await this.comment.fill("Please deliver between 9 AM to 5 PM");
-    await this.page.getByText("Place Order").click();
+
+  async getDeliveryAddress() {
+    return await this.deliveryAddress.innerText();
+  }
+  async getBillingAddress() {
+    return await this.billingAddress.innerText();
+  }
+  async enterComment(comment: string) {
+    await this.comment.fill(comment);
   }
 }

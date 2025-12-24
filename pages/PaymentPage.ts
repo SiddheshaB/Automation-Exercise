@@ -16,7 +16,7 @@ export class PaymentPage {
     this.expiryYear = this.page.locator("input[name='expiry_year']");
   }
 
-  async iEnterCardDetails() {
+  async enterCardDetails() {
     await this.cardName.fill("John Doe");
     await this.cardNumber.fill("4111111111111111");
     await this.cvc.fill("123");
