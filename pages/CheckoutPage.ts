@@ -1,6 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class CheckoutPage {
+export class CheckoutPage extends BasePage {
   page: Page;
   reviewOrder: Locator;
   comment: Locator;
@@ -8,6 +9,7 @@ export class CheckoutPage {
   billingAddress: Locator;
 
   constructor(page: Page) {
+    super(page);
     this.page = page;
     this.reviewOrder = this.page.getByRole("heading", {
       name: "Review Your Order",
@@ -25,5 +27,8 @@ export class CheckoutPage {
   }
   async enterComment(comment: string) {
     await this.comment.fill(comment);
+  }
+  async proceedToCheckout() {
+    await this.page.getByText("Place Order").click();
   }
 }

@@ -1,7 +1,8 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { CommonApi } from "../features/step_definitions/CommonApi.steps";
+import { BasePage } from "./BasePage";
 
-export class ViewCartPage {
+export class ViewCartPage extends BasePage {
   page: Page;
   checkoutButton: Locator;
   registerLink: Locator;
@@ -10,6 +11,7 @@ export class ViewCartPage {
   //commonApi: CommonApi;
 
   constructor(page: Page) {
+    super(page);
     this.page = page;
     this.checkoutButton = this.page.getByText("Proceed To Checkout");
     this.registerLink = this.page.getByText("Register / Login", {
@@ -24,9 +26,6 @@ export class ViewCartPage {
     );
     return await this.productName.nth(index).textContent();
   }
-  async checkout() {
-    await this.checkoutButton.click();
-  }
 
   async iRemoveAnItem() {
     await this.removeButton.click();
@@ -38,5 +37,8 @@ export class ViewCartPage {
     for (let i = 0; i < index; i++) {
       expect(productsList[i].name).toBe(await this.getProductName(i));
     }
+  }
+  async proceedToCheckout() {
+    await this.checkoutButton.click();
   }
 }

@@ -3,3 +3,4 @@ export const URLS = {
   PRODUCTS: "/products",
   CART: "/view_cart",
 };
+export default URLS;

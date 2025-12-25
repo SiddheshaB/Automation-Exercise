@@ -1,4 +1,5 @@
 import { expect, Locator, Page } from "@playwright/test";
+import urls from "../constants/urls";
 export class BasePage {
   page: Page;
   acceptCookies: Locator;
@@ -9,11 +10,13 @@ export class BasePage {
     this.acceptCookies = this.page.locator('button:has-text("Consent")');
     this.continueButton = this.page.locator('[data-qa="continue-button"]');
   }
-  async gotoURL(pageURL: string) {
+  async open(pageURL: string) {
     const baseURL = "https://automationexercise.com";
     await this.page.goto(baseURL + pageURL);
     await this.consentCookies();
-    //await this.page.goto("https://automationexercise.com/login");
+    if (await this.acceptCookies.isVisible()) {
+      await this.acceptCookies.click({ timeout: 5000 });
+    }
   }
   async consentCookies() {
     if (await this.acceptCookies.isVisible()) {

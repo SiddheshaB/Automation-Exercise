@@ -1,49 +1,58 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class ProductsPage {
+export class ProductsPage extends BasePage {
   page: Page;
   searchBox: Locator;
   searchButton: Locator;
   addToCartButton: Locator;
   productsList: Locator;
-  productPage: Locator;
+  pageHeading: Locator;
   acceptCookies: Locator;
-  productName: Locator;
+  productNames: Locator;
+  searchedHeading: Locator;
   constructor(page: Page) {
+    super(page);
     this.page = page;
     this.searchBox = this.page.getByPlaceholder("Search Product");
     this.searchButton = this.page.locator("#submit_search");
     this.addToCartButton = this.page.getByText("Add to cart");
     this.productsList = this.page.locator(".productinfo");
-    this.productPage = this.page.getByText("All Products");
+    this.pageHeading = this.page.getByText("All Products");
     this.acceptCookies = this.page.locator('button:has-text("Consent")');
-    this.productName = this.page.locator(".productinfo p");
+    this.productNames = this.page.locator(".productinfo p");
+    this.searchedHeading = this.page.getByText("Searched Products");
   }
-  async firstProduct() {
-    return await this.productName.first().allTextContents();
+
+  async getAllProductNames() {
+    return await this.productNames.allTextContents();
   }
 
   async addProduct(index: number) {
-    await this.productPage.isVisible();
-    await this.productName.nth(index).hover();
+    await this.productNames.nth(index).hover();
     await this.addToCartButton.nth(index).click();
     await this.page.getByText("Added!").first().waitFor();
-    return await this.productName.first().allTextContents();
+    return await this.productNames.first().allTextContents();
   }
-
-  async iSearchForAProduct(productName: string) {
+  async openCart() {
+    await this.page.getByText("View Cart").click();
+  }
+  async searchProduct(productName: string) {
     await this.searchBox.fill(productName);
     await this.searchButton.click();
   }
 
+  async viewCart() {
+    await this.page.getByText("View Cart").click();
+  }
   async iVerifySearchedProductsAreVisible(product: string) {
-    const count = await this.productName.count();
+    const count = await this.productNames.count();
     for (let i = 0; i < count; i++) {
-      expect(await this.productName.nth(i).textContent()).toContain(product);
+      expect(await this.productNames.nth(i).textContent()).toContain(product);
     }
   }
   async iAddAnItemToTheCart(index: number) {
-    await this.productName.nth(index).hover();
+    await this.productNames.nth(index).hover();
     await this.page
       .locator(".product-image-wrapper")
       .nth(index)

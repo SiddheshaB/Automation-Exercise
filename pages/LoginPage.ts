@@ -7,7 +7,8 @@ export class LoginPage extends BasePage {
   name: Locator;
   signUpEmail: Locator;
   signUpButton: Locator;
-  baseUrl: string = "https://automationexercise.com";
+  loginError: Locator;
+  signupError: Locator;
   constructor(page: Page) {
     //this.page = page;
     super(page);
@@ -17,6 +18,8 @@ export class LoginPage extends BasePage {
     this.name = page.getByPlaceholder("Name");
     this.signUpEmail = page.locator('[data-qa="signup-email"]');
     this.signUpButton = page.getByRole("button", { name: "Signup" });
+    this.loginError = page.getByText("Your email or password is incorrect!");
+    this.signupError = page.getByText("Email Address already exist!");
   }
   async login(emailAddress: string, password: string) {
     await this.loginEmail.fill(emailAddress);

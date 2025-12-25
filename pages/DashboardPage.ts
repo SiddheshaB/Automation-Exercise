@@ -1,18 +1,20 @@
 import { expect, Locator, Page } from "@playwright/test";
-export class DashboardPage {
+import { BasePage } from "./BasePage";
+export class DashboardPage extends BasePage {
   page: Page;
   addToCartButton: Locator;
   viewCartButton: Locator;
   subscribeEmail: Locator;
+  loggedInUser: Locator;
+  accountCreatedMessage: Locator;
   constructor(page: Page) {
+    super(page);
     this.page = page;
     this.addToCartButton = this.page.getByText("Add to cart");
     this.viewCartButton = this.page.locator('u:has-text("View Cart")');
     this.subscribeEmail = this.page.locator("#susbscribe_email");
-  }
-
-  async iValidateLoggedInUser(result: string) {
-    await expect(this.page.getByText(result)).toBeVisible();
+    this.loggedInUser = this.page.getByText("Logged in as John Doe");
+    this.accountCreatedMessage = this.page.getByText("Account Created!");
   }
 
   async addProductToCart() {
@@ -21,7 +23,7 @@ export class DashboardPage {
     await this.viewCartButton.click();
   }
 
-  async iClickOnMenuItem(menuItem: string) {
+  async gotoMenuItem(menuItem: string) {
     await this.page.getByRole("link", { name: menuItem }).click();
   }
 

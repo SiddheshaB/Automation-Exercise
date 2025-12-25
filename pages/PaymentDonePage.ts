@@ -1,12 +1,11 @@
-import { expect, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 
 export class PaymentDonePage {
   page: Page;
+  orderPlacedMessage: Locator;
   constructor(page: Page) {
     this.page = page;
-  }
-  async iVerifyOrderConfirmation() {
-    expect(await this.page.getByText("Order Placed!").isVisible()).toBeTruthy();
+    this.orderPlacedMessage = this.page.getByText("Order Placed!");
   }
 
   async downloadInvoice() {
