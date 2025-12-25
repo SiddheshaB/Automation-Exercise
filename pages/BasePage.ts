@@ -38,7 +38,11 @@ export class BasePage {
     await this.continueButton.click();
   }
   async clickByText(button: string) {
-    await this.page.getByText(button).click();
+    await this.page
+      .getByText(button, {
+        exact: true,
+      })
+      .click();
   }
   async normalizeText(text: string) {
     return text.replace(/\s+/g, " ").trim();

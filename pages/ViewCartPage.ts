@@ -28,11 +28,6 @@ export class ViewCartPage {
     await this.checkoutButton.click();
   }
 
-  async iSeeRegisterOption() {
-    expect(await this.registerLink.isVisible()).toBeTruthy();
-    await this.registerLink.click();
-  }
-
   async iRemoveAnItem() {
     await this.removeButton.click();
   }
