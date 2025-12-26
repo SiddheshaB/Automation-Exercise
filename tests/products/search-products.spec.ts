@@ -5,11 +5,11 @@ test.describe("Product search", () => {
     const productsPage = poManager.getProductsPage();
     await productsPage.open(urls.PRODUCTS);
     await expect(productsPage.pageHeading).toBeVisible();
-    await productsPage.searchProduct("T-shirt");
+    await productsPage.searchProduct("Blue Top");
     await expect(productsPage.searchedHeading).toBeVisible();
     const results = await productsPage.getAllProductNames();
     for (const name of results) {
-      expect(name).toContain("T-shirt");
+      expect(name).toContain("Blue Top");
     }
   });
 });
