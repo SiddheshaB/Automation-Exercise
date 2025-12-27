@@ -1,9 +1,11 @@
 import { test as base } from "@playwright/test";
 import { POManager } from "../pages/POManager";
 import { AuthApi } from "../api/AuthApi";
+import { ProductApi } from "../api/ProductApi";
 type Fixtures = {
   poManager: POManager;
   authApi: AuthApi;
+  productApi: ProductApi;
 };
 export const test = base.extend<Fixtures>({
   poManager: async ({ page }, use) => {
@@ -11,6 +13,9 @@ export const test = base.extend<Fixtures>({
   },
   authApi: async ({ request }, use) => {
     await use(new AuthApi(request));
+  },
+  productApi: async ({ request }, use) => {
+    await use(new ProductApi(request));
   },
 });
 export { expect } from "@playwright/test";

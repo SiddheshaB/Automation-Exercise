@@ -13,12 +13,6 @@ export class BasePage {
   async open(pageURL: string) {
     const baseURL = "https://automationexercise.com";
     await this.page.goto(baseURL + pageURL);
-    await this.consentCookies();
-    if (await this.acceptCookies.isVisible()) {
-      await this.acceptCookies.click({ timeout: 5000 });
-    }
-  }
-  async consentCookies() {
     if (await this.acceptCookies.isVisible()) {
       await this.acceptCookies.click({ timeout: 5000 });
     }

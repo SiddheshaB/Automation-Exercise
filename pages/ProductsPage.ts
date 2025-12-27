@@ -11,6 +11,9 @@ export class ProductsPage extends BasePage {
   acceptCookies: Locator;
   productNames: Locator;
   searchedHeading: Locator;
+  continueShopping: Locator;
+  viewCart: Locator;
+  viewProduct: Locator;
   constructor(page: Page) {
     super(page);
     this.page = page;
@@ -22,35 +25,36 @@ export class ProductsPage extends BasePage {
     this.acceptCookies = this.page.locator('button:has-text("Consent")');
     this.productNames = this.page.locator(".productinfo p");
     this.searchedHeading = this.page.getByText("Searched Products");
+    this.continueShopping = this.page.getByText("Continue Shopping");
+    this.viewCart = this.page.getByText("View Cart");
+    this.viewProduct = this.page.getByRole("link", { name: "View Product" });
   }
 
   async getAllProductNames() {
     return await this.productNames.allTextContents();
   }
 
+  async clickViewCart() {
+    await this.viewCart.click();
+  }
+  async clickContinueShopping() {
+    await this.continueShopping.click();
+  }
   async addProduct(index: number) {
     await this.productNames.nth(index).hover();
     await this.addToCartButton.nth(index).click();
     await this.page.getByText("Added!").first().waitFor();
     return await this.productNames.first().allTextContents();
   }
-  async openCart() {
-    await this.page.getByText("View Cart").click();
+
+  async clickViewProduct(index: number) {
+    await this.viewProduct.nth(index).click();
   }
   async searchProduct(productName: string) {
     await this.searchBox.fill(productName);
     await this.searchButton.click();
   }
 
-  async viewCart() {
-    await this.page.getByText("View Cart").click();
-  }
-  async iVerifySearchedProductsAreVisible(product: string) {
-    const count = await this.productNames.count();
-    for (let i = 0; i < count; i++) {
-      expect(await this.productNames.nth(i).textContent()).toContain(product);
-    }
-  }
   async iAddAnItemToTheCart(index: number) {
     await this.productNames.nth(index).hover();
     await this.page

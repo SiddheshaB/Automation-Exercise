@@ -8,6 +8,8 @@ function getPages(poManager: any) {
     paymentPage: poManager.getPaymentPage(),
     paymentDonePage: poManager.getPaymentDonePage(),
     signUpPage: poManager.getSignUpPage(),
+    contactUsPage: poManager.getContactUsFormPage(),
+    productDetailsPage: poManager.getProductDetailsPage(),
   };
 }
 export { getPages };

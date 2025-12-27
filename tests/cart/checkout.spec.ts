@@ -20,7 +20,7 @@ test.describe("Checkout", () => {
     await expect(dashboardPage.loggedInUser).toBeVisible();
     await dashboardPage.gotoMenuItem("Products");
     const addedProduct = await productsPage.addProduct(0);
-    await productsPage.viewCart();
+    await productsPage.clickViewCart();
     expect(addedProduct[0]).toEqual(await viewCartPage.getProductName(0));
     await viewCartPage.proceedToCheckout();
     const rawBillingAddress = await checkoutPage.getBillingAddress();
@@ -50,10 +50,10 @@ test.describe("Checkout", () => {
     } = getPages(poManager);
     await productsPage.open(urls.PRODUCTS);
     const addedProduct = await productsPage.addProduct(0);
-    await productsPage.viewCart();
+    await productsPage.clickViewCart();
     await viewCartPage.proceedToCheckout();
     await expect(viewCartPage.registerLink).toBeVisible();
-    await viewCartPage.registerLink.click();
+    await viewCartPage.clickRegisterLink();
     await authApi.createUserViaApi();
     await loginPage.login(userData.email, userData.password);
     await expect(dashboardPage.loggedInUser).toBeVisible();

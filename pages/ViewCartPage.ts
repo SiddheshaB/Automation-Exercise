@@ -7,8 +7,6 @@ export class ViewCartPage extends BasePage {
   checkoutButton: Locator;
   registerLink: Locator;
   productName: Locator;
-  removeButton: Locator;
-  //commonApi: CommonApi;
 
   constructor(page: Page) {
     super(page);
@@ -18,7 +16,6 @@ export class ViewCartPage extends BasePage {
       exact: true,
     });
     this.productName = this.page.locator(".cart_description h4 a");
-    this.removeButton = this.page.locator(".cart_quantity_delete");
   }
   async getProductName(index: number) {
     console.log(
@@ -27,10 +24,19 @@ export class ViewCartPage extends BasePage {
     return await this.productName.nth(index).textContent();
   }
 
-  async iRemoveAnItem() {
-    await this.removeButton.click();
+  async clickRegisterLink() {
+    await this.registerLink.click();
   }
-
+  async removeAnItem(index: number) {
+    await this.page
+      .locator(
+        "//tr[@id='product-" + index + "']//a[@class='cart_quantity_delete']"
+      )
+      .click();
+  }
+  async getCartItems() {
+    return await this.productName.allTextContents();
+  }
   async iVerifyCartItems(index: number) {
     const commonApi = new CommonApi();
     const productsList = await commonApi.getAllProductsListViaApi();

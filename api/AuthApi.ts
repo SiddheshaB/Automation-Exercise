@@ -59,29 +59,5 @@ export class AuthApi {
       }
     );
   }
-
-  async getAllProductsListViaApi() {
-    this.response = await fetch(
-      "https://automationexercise.com/api/productsList",
-      {
-        method: "GET",
-      }
-    );
-
-    const body = await this.response.json();
-    return body.products;
-  }
-
-  // async getAllProductsListViaApiForCart() {
-  //   this.response = await fetch(
-  //     "https://automationexercise.com/api/productsList",
-  //     {
-  //       method: "GET",
-  //     }
-  //   );
-
-  //   const body = await this.response.json();
-  //   return body.products;
-  // }
 }
 module.exports = { AuthApi };
